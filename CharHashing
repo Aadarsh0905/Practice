@@ -1,0 +1,26 @@
+package Practice;
+
+import java.util.*;
+public class CharHashing {
+    public static void main(String[] args) {
+        Scanner in=new Scanner(System.in);
+        System.out.print("Enter the number of elements: ");
+        int n=in.nextInt();
+        if(n<=0){
+            System.out.println("No. of elements can't be negative or zero");
+            return;
+        }
+        char[] ch=new char[n];
+        for(int i=0;i<n;i++){
+            ch[i]=in.next().charAt(0);
+        }
+        HashMap<Character,Integer> hash=new HashMap<>();
+        for(char c:ch){
+            hash.put(c,hash.getOrDefault(c,0)+1);
+        }
+        for(Map.Entry<Character,Integer>entry:hash.entrySet()){
+            System.out.println(entry.getKey()+"->"+entry.getValue());
+        }
+    }
+
+}
