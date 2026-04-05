@@ -1,0 +1,41 @@
+package Practice;
+
+import java.util.*;
+public class DuplicateElements {
+    public static void main(String[] args) {
+        Scanner in=new Scanner(System.in);
+        System.out.println("Enter the number of elements: ");
+        int n=in.nextInt();
+        int[]arr=new int[n];
+        System.out.println("Enter the elements in the array: ");
+        for(int i=0;i<n;i++){
+            arr[i]=in.nextInt();
+        }
+        //Brute-force Approach
+//        HashSet<Integer> set=new HashSet<>();
+//        for(int i=0;i<n;i++){
+//            set.add(arr[i]);
+//        }
+//        System.out.println(set);
+//        System.out.println(set.size());
+        //To count no. of elements
+//        HashMap<Integer,Integer> hash=new HashMap<>();
+//        for(int i=0;i<n;i++){
+//            hash.put(arr[i],hash.getOrDefault(arr[i],0)+1);
+//        }
+//        for(Map.Entry<Integer,Integer> entry:hash.entrySet()){
+//            System.out.println(entry.getKey()+"->"+entry.getValue());
+//        }
+
+        //Optimal Approach using two pointer approach
+        int i=0;
+        for(int j=1;j<n;j++){
+            if(arr[i]!=arr[j]){
+                arr[i+1]=arr[j];
+                i++;
+            }
+        }
+        System.out.println(i+1);
+
+    }
+}
