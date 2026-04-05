@@ -1,0 +1,48 @@
+package Practice;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class LeftRotateBydPlaces {
+    public static void main(String[] args) {
+        Scanner in=new Scanner(System.in);
+        System.out.println("Enter the number of elements: ");
+        int n=in.nextInt();
+        int[]arr=new int[n];
+        System.out.println("Enter the elements in the array: ");
+        for(int i=0;i<n;i++){
+            arr[i]=in.nextInt();
+        }
+        System.out.println("Enter the number of times you want to left rotate this array:");
+        int d=in.nextInt();
+        d=d%n;
+        //Brute force approach
+//        ArrayList<Integer> l=new ArrayList<>();
+//        for(int i=0;i<d;i++){
+//            l.add(arr[i]);
+//        }
+//        for(int i=d;i<n;i++){
+//            arr[i-d]=arr[i];
+//        }
+//        for(int i=n-d;i<n;i++) {
+//            arr[i] = l.get(i - (n - d));
+//        }
+//        System.out.println(Arrays.toString(arr));
+
+        //Optimal Approach
+        reverse(arr,0,d-1);
+        reverse(arr,d,n-1);
+        reverse(arr,0,n-1);
+        System.out.println(Arrays.toString(arr));
+    }
+    public static void reverse(int[] arr,int start,int end){
+        while(start<=end){
+            int temp=arr[start];
+            arr[start]=arr[end];
+            arr[end]=temp;
+            start++;
+            end--;
+        }
+    }
+}
