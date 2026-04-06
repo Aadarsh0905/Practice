@@ -1,0 +1,50 @@
+package Practice;
+
+import java.util.*;
+
+public class TwoSumProblem {
+    public static void main(String[] args) {
+        Scanner in=new Scanner(System.in);
+        System.out.println("Enter the number of elements: ");
+        int n=in.nextInt();
+        int[]arr=new int[n];
+        System.out.println("Enter the elements in the array: ");
+        for(int i=0;i<n;i++){
+            arr[i]=in.nextInt();
+        }
+        System.out.println("Enter the target sum you want: ");
+        int target=in.nextInt();
+
+
+        //Better force
+//        boolean flag=false;
+//        HashMap<Integer,Integer>h=new HashMap<>();
+//        for(int i=0;i<n;i++){
+//            int diff=target-arr[i];
+//            if(h.containsKey(diff)){
+//                flag=true;
+//                System.out.printf("The target comes from index %d and %d",i,h.get(diff));
+//            }
+//            if(!h.containsKey(diff)){
+//                h.put(arr[i],i);
+//            }
+//        }
+//        if(flag!=true) System.out.println("The 2 sum is not found according to target");
+
+        //Optimal approach
+        int left=0;
+        int right=n-1;
+        while(left<=right){
+            if(arr[left]+arr[right]<target){
+                left++;
+            }
+            else if(arr[left]+arr[right]>target){
+                right--;
+            }
+            else{
+                System.out.println("The two sum property lies in:"+arr[left]+"and"+arr[right]+"in index"+left+" "+"and"+right);
+                break;
+            }
+        }
+    }
+}
