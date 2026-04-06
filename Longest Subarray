@@ -1,0 +1,93 @@
+package Practice;
+
+import java.util.*;
+
+public class LongestSubarrayWithSumK {
+    public static void main(String[] args) {
+        Scanner in=new Scanner(System.in);
+        System.out.println("Enter the number of elements: ");
+        int n=in.nextInt();
+        int[]arr=new int[n];
+        System.out.println("Enter the elements in the array: ");
+        for(int i=0;i<n;i++){
+            arr[i]=in.nextInt();
+        }
+        System.out.println("Enter the value of sum you want to check: ");
+        int k=in.nextInt();
+        //Brute force
+//        int len=0;
+//        for(int i=0;i<n;i++){
+//            int sum=0;
+//            for(int j=i;j<n;j++){
+//                sum+=arr[j];
+//                if(sum==k)len=Math.max(len,j-i+1);
+//            }
+//        }
+//        System.out.println("The length of largest consecutive subarray is: "+len);
+
+        //Better Approach
+//        HashMap<Integer,Integer>h=new HashMap<>();
+//        int maxSum=0;
+//        int len=0;
+//        for(int i=0;i<n;i++) {
+//            maxSum += arr[i];
+//            if (maxSum == k) len = Math.max(len, i + 1);
+//
+//            int rem = maxSum - k;
+//            if(h.containsKey(rem)){
+//                int mlen=i-h.get(rem);
+//                len=Math.max(len,mlen);
+//            }
+//            if(!h.containsKey(rem)){
+//                h.put(maxSum,i);
+//            }
+//        }
+//        System.out.println("The length of largest consecutive subarray is: "+len);
+
+//        HashMap<Integer,Integer>h=new HashMap<>();
+//        int sum=0;
+//        int maxLen=0;
+//        for(int i=0;i<n;i++){
+//            sum+=arr[i];
+//            if(sum==k)maxLen=Math.max(maxLen,i+1);
+//            int rem=sum-k;
+//            if(h.containsKey(rem)){
+//                int len=i-h.get(rem);
+//                maxLen=Math.max(len,maxLen);
+//            }
+//            if(!h.containsKey(rem)){
+//                h.put(sum,i);
+//            }
+//        }
+//        System.out.println("The largest subarray is: "+maxLen);
+        //Optimal
+//        int left=0;
+//        int right=0;
+//        int sum=arr[0];
+//        int maxLen=0;
+//        while(right<n){
+//            while(left<=right && sum>k){
+//                sum-=arr[left];
+//                left++;
+//            }
+//            if(sum==k)maxLen=Math.max(maxLen,right-left+1);
+//            right++;
+//            if(right<n)sum+=arr[right];
+//        }
+//        System.out.println("The largest consecutive subarray is: "+maxLen);
+
+        int left=0;
+        int right=0;
+        int maxLen=0;
+        int sum=0;
+        while(right<n){
+            while(left<=right && sum>k){
+                sum-=arr[left];
+                left++;
+            }
+            if(sum==k)maxLen=Math.max(maxLen,right-left+1);
+            right++;
+            if(right<n)sum+=arr[right];
+        }
+    }
+}
