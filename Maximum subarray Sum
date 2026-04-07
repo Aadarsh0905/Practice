@@ -1,0 +1,61 @@
+package Practice;
+
+import java.util.*;
+
+public class MaximumSubarraySum {
+    public static void main(String[] args) {
+        Scanner in=new Scanner(System.in);
+        System.out.println("Enter the number of elements: ");
+        int n=in.nextInt();
+        int[]arr=new int[n];
+        System.out.println("Enter the elements in the array: ");
+        for(int i=0;i<n;i++){
+            arr[i]=in.nextInt();
+        }
+//        //Brute force approach
+//        int maxi=Integer.MIN_VALUE;
+//        for(int i=0;i<n;i++){
+//            for(int j=i;j<n;j++){
+//                int sum=0;
+//                for(int k=i;k<j;k++){
+//                    sum+=arr[k];
+//                }
+//                maxi=Math.max(sum,maxi);
+//            }
+//        }
+        //Better Approach
+//        int maxi=Integer.MIN_VALUE;
+//        for(int i=0;i<n;i++){
+//            int sum=0;
+//            for(int j=i;j<n;j++){
+//                sum+=arr[j];
+//                maxi=Math.max(maxi,sum);
+//            }
+//        }
+        //Optimal Approach
+//        int maxi=Integer.MIN_VALUE;
+//        int sum=0;
+//        for(int i=0;i<n;i++){
+//            sum+=arr[i];
+//            if(sum<0)sum=0;
+//            maxi=Math.max(maxi,sum);
+//            if(maxi<0) maxi=0;
+//        }
+        int sum=0;
+        int maxi=Integer.MIN_VALUE;
+        int startAns=-1;
+        int endAns=-1;
+        for(int i=0;i<n;i++){
+            int start=0;
+            if(sum==0)start=i;
+            sum+=arr[i];
+            if(sum>maxi){
+                maxi=sum;
+                startAns=start;
+                endAns=i;
+            }
+            if(sum<0)sum=0;
+        }
+        System.out.println("The maximum subarray sum is: "+maxi);
+    }
+}
