@@ -1,0 +1,94 @@
+package Practice;
+
+import java.util.*;
+
+public class NextPermutation {
+    public static void main(String[] args) {
+        Scanner in=new Scanner(System.in);
+        System.out.println("Enter the number of elements: ");
+        int n=in.nextInt();
+        int[]arr=new int[n];
+        System.out.println("Enter the elements in the array: ");
+        for(int i=0;i<n;i++){
+            arr[i]=in.nextInt();
+        }
+        //Optimal Method-2
+        int ind=-1;
+        for(int i=n-2;i>=0;i--){
+            if(arr[i]<arr[i+1]){
+                ind=i;
+                break;
+            }
+        }
+        if(ind==-1) {
+            reverse(arr,ind+1,n-1);
+            return;
+        }
+
+        for(int i=n-1;i>ind;i--){
+            if(arr[i]>arr[ind]){
+                swap(i,ind,arr);
+                break;
+            }
+        }
+    }
+    //Brute force
+//    private void recur(int[] arr,List<Integer>ds,List<List<Integer>>ans,boolean[] freq){
+//        if(ds.size()==arr.length){
+//            ans.add(new ArrayList<>(ds));
+//            return;
+//        }
+//        for(int i=0;i<arr.length;i++){
+//            if(!freq[i]){
+//                freq[i]=true;
+//                ds.add(arr[i]);
+//                recur(arr,ds,ans,freq);
+//                ds.remove(ds.size()-1);
+//                freq[i]=false;
+//            }
+//        }
+//    }
+//    public List<List<Integer>> permute(int[] arr){
+//        List<List<Integer>> ans=new ArrayList<>();
+//        List<Integer>ds=new ArrayList<>();
+//        boolean[] freq=new boolean[arr.length];
+//        recur(arr,ds,ans,freq);
+//        return ans;
+//    }
+
+    //Optimal Approach--Method 1
+//    private void recur(int index,int[] arr,List<List<Integer>> ans){
+//        if(index==arr.length){
+//            List<Integer>ds=new ArrayList<>();
+//            for(int i=0;i<arr.length;i++){
+//                ds.add(arr[i]);
+//            }
+//            ans.add(new ArrayList<>(ds));
+//            return;
+//        }
+//        for(int i=index;i<arr.length;i++){
+//            swap(i,index,arr);
+//            recur(index+1,arr,ans);
+//            swap(i,index,arr);
+//        }
+//    }
+    private static void swap(int i,int j,int[] arr){
+        int t=arr[i];
+        arr[i]=arr[j];
+        arr[j]=t;
+    }
+//    public List<List<Integer>>permute(int[] arr){
+//        List<List<Integer>>ans=new ArrayList<>();
+//        recur(0,arr,ans);
+//        return ans;
+//    }
+
+    //Optimal Approach--Method2
+    public static void reverse(int[] arr,int start,int end){
+        while(start<=end){
+            int temp=arr[start];
+            arr[start]=arr[end];
+            arr[end]=temp;
+        }
+    }
+}
