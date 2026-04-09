@@ -1,0 +1,92 @@
+package PracticeArrays;
+
+import java.util.HashMap;
+import java.util.*;
+
+public class MissingNoOfRepeatingElement {
+    public static void main(String[] args) {
+        Scanner in=new Scanner(System.in);
+        System.out.println("Enter the number of elements in array: ");
+        int  n=in.nextInt();
+        int [] arr=new int[n];
+        System.out.println("Enter the elements in the array: ");
+        for(int i=0;i<n;i++){
+            arr[i]=in.nextInt();
+        }
+//        int missing=-1;
+//        int repeating=-1;
+//        for(int i=1;i<=n;i++){
+//            int cnt=0;
+//            for(int j=0;j<n;j++){
+//                if(arr[j]==i)cnt++;
+//            }
+//            if(cnt==2)repeating=i;
+//            else if(cnt==0) missing=i;
+//            if(missing!=-1 && repeating!=-1)break;
+//        }
+//        System.out.println("The missing number is: "+missing);
+//        System.out.println("The repeating number is: "+repeating);
+
+        //Better Approach
+//        HashMap<Integer,Integer>hash=new HashMap<>();
+//        for(int i=0;i<n;i++){
+//            hash.put(arr[i],hash.getOrDefault(arr[i],0)+1);
+//        }
+//        for(int i=1;i<=n;i++){
+//            int freq=hash.getOrDefault(i,0);
+//            if(freq==0) System.out.println("The missing number is: "+i);
+//            else if(freq==2) System.out.println("The repeating number is: "+i);
+//        }
+
+        //Optimal Approach-Method1
+//        int sn=(n*(n+1))/2;
+//        int sn2=(n*(n+1)*(2*n+1))/6;
+//        int s1=0;
+//        int s2=0;
+//        for(int i=0;i<n;i++){
+//            s1+=arr[i];
+//            s2+=arr[i]*arr[i];
+//        }
+//        int val1=s1-sn;
+//        int val2=s2-sn2;
+//        val2=val2/val1;
+//        int X=(val1+val2)/2;
+//        int Y=X-(val1);
+//        System.out.println("The repeating number is: "+X);
+//        System.out.println("The missing number is: "+Y);
+
+        //Optimal Method2
+        int xr=0;
+        for(int i=0;i<n;i++){
+            xr=xr^arr[i];
+            xr=xr^(i+1);
+        }
+        int bitNo=0;
+        while(true){
+            if((xr & (1<<bitNo))!=0)break;
+            bitNo++;
+        }
+        int zero=0;
+        int one=0;
+        for(int i=0;i<n;i++) {
+            if((arr[i]&(1<<bitNo))!=0)one=one^arr[i];
+            else zero=zero^arr[i];
+        }
+        for(int i=1;i<=n;i++){
+            if((i & (1<<bitNo))!=0)one=one^i;
+            else zero=zero^i;
+        }
+        int cnt=0;
+        for(int i=0;i<n;i++){
+            if(arr[i]==zero) cnt++;
+        }
+        if(cnt==2){
+            System.out.println("Repeating number is: "+zero);
+            System.out.println("Missing number is: "+one);
+        }
+        else{
+            System.out.println("Repeating number is: "+one);
+            System.out.println("Missing number is: "+zero);
+        }
+    }
+}
