@@ -1,0 +1,131 @@
+package PracticeArrays;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class MergeTwoSortedArray {
+    public static void main(String[] args) {
+        Scanner in=new Scanner(System.in);
+        System.out.println("Enter the number of elements in array: ");
+        int n=in.nextInt();
+        long[] arr=new long[n];
+        System.out.println("Enter the elements in the array: ");
+        for(int i=0;i<n;i++){
+            arr[i]=in.nextInt();
+        }
+        System.out.println("Enter the number of elements in array2: ");
+        int m=in.nextInt();
+        long[] brr=new long[m];
+        System.out.println("Enter the elements in the array2: ");
+        for(int i=0;i<m;i++){
+            brr[i]=in.nextInt();
+        }
+
+//        Brute Force
+//        merge(arr,brr,n,m);
+
+        //Optimal-Method1
+        mergeArray(arr,brr,n,m);
+
+    }
+    //Brute force
+//    public static void merge(long[] arr,long[] brr,int n,int m){
+//        long[] arr3=new long[n+m];
+//        int left=0;
+//        int right=0;
+//        int index=0;
+//        while(left<=n-1 && right<=m-1){
+//            if(arr[left]<=brr[right]){
+//                arr3[index]=arr[left];
+//                left++;
+//                index++;
+//            }
+//            else{
+//                arr3[index]=brr[right];
+//                right++;
+//                index++;
+//            }
+//        }
+//        while(left<n){
+//            arr3[index++]=arr[left++];
+//        }
+//        while(right<m){
+//            arr3[index++]=brr[right++];
+//        }
+//
+//        for(int i=0;i<n+m;i++){
+//            if(i<n)arr[i]=arr3[i];
+//            else brr[i-n]=arr3[i];
+//        }
+//        System.out.println(Arrays.toString(arr));
+//        System.out.println(Arrays.toString(brr));
+//    }
+
+    public static void mergeArray(long[] arr,long[] brr,int n,int m){
+        int left=n-1;
+        int right=0;
+        while(left>=0 && right<m){
+            if(arr[left]>brr[right]){
+                long temp=arr[left];
+                arr[left]=brr[right];
+                brr[right]=temp;
+                left--;
+                right++;
+            }
+            else break;
+        }
+        Arrays.sort(arr);
+        Arrays.sort(brr);
+    }
+
+
+
+
+    //
+//    public static void mergeArray(long[] arr,long[] brr,int n,int m){
+//        int left=n-1;
+//        int right=0;
+//        while(left>=0 && right<m){
+//            if(arr[left]>brr[right]){
+//                long temp=arr[left];
+//                arr[left]=brr[right];
+//                brr[right]=temp;
+//                left--;
+//                right++;
+//            }
+//            else break;
+//        }
+//        Arrays.sort(arr);
+//        Arrays.sort(brr);
+//        System.out.println(Arrays.toString(arr));
+//        System.out.println(Arrays.toString(brr));
+//    }
+
+
+    //Optimal-Method2
+    public static void swapIfGreater(long[] arr,long[] brr,int ind1,int ind2){
+        if(arr[ind1]>brr[ind2]){
+            long temp=arr[ind1];
+            arr[ind1]=arr[ind2];
+            arr[ind2]=temp;
+        }
+    }
+
+    public static void merge(long[] arr,long[] brr,int n,int m){
+        int len=(n+m);
+        int gap=(len/2)+(len%2);
+        while(gap>0){
+            int left=0;
+            int right=left+gap;
+            while(right<len){
+                if(left<n && right>=n)swapIfGreater(arr,brr,left,right-n);
+                else if(left>=n) swapIfGreater(brr,brr,left-n,right-n);
+                else swapIfGreater(arr,arr,left,right);
+                left++;
+                right++;
+            }
+            if(gap==1)break;
+            else gap=(gap/2)+(gap%2);
+        }
+    }
+}
